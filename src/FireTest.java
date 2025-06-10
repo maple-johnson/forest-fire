@@ -1,4 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
@@ -52,6 +54,34 @@ public class FireTest {
         assertTrue(neighborsSet.contains("1,0"));
         assertTrue(neighborsSet.contains("1,2"));
         assertTrue(neighborsSet.contains("2,1"));
+
+    }
+
+    // No Neighbors
+    @Test
+    public void testNeighborTrees_NoSides()
+    {
+        char[][] forest = {
+            {'.', '.', '.'},
+            {'.', 't', '.'},
+            {'.', '.', '.'}
+        };
+
+        int spreadR = 1;
+        int spreadC = 1;
+
+        int[] startingLocation = {spreadR, spreadC};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(startingLocation);
+
+        List<int[]> neighbors = Fire.neighborTrees(forest, spreadR, spreadC, queue);
+        Set<String> neighborsSet = toSet(neighbors);
+
+        assertTrue(neighborsSet.contains("-1,0"));
+        assertFalse(neighborsSet.contains("0,1"));
+        assertFalse(neighborsSet.contains("1,0"));
+        assertFalse(neighborsSet.contains("1,2"));
+        assertFalse(neighborsSet.contains("2,1"));
 
     }
 
