@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
@@ -28,6 +28,27 @@ public class FireTest {
         int actual = Fire.timeToBurn(forest, matchR, matchC);
 
         assertEquals(expected, actual);
+    }
+
+    // Match set not on a tree
+    @Test
+    public void testTimeToBurn_BadArgument()
+    {
+        char[][] forest = {
+            {'.', '.', '.'},
+            {'.', '.', '.'},
+            {'.', '.', '.'}
+        };
+
+        int spreadR = 1;
+        int spreadC = 1;
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Fire.timeToBurn(forest, spreadR, spreadC);
+        });
+
+        assertEquals("The match isn't lit at a tree.", exception.getMessage());
+
     }
 
     // Neighbors on All Sides
