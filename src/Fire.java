@@ -42,8 +42,8 @@ public class Fire {
      */
     public static int timeToBurn(char[][] forest, int matchR, int matchC)
      {
-        // HINT: when adding to your BFS queue, you can include more information than
-        // just a location. What other information might be useful?
+        if (forest[matchR][matchC] == '.') throw new IllegalArgumentException("The match isn't lit at a tree.");
+
         boolean[][] visited = new boolean[forest.length][forest[0].length];
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{matchR, matchC});
