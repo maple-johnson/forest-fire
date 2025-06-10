@@ -85,6 +85,31 @@ public class FireTest {
 
     }
 
+    // Corner Neighbors
+    @Test
+    public void testNeighborTrees_CornerTrees()
+    {
+        char[][] forest = {
+            {'t', 't', '.'},
+            {'t', '.', '.'},
+            {'.', '.', '.'}
+        };
+
+        int spreadR = 0;
+        int spreadC = 0;
+
+        int[] startingLocation = {spreadR, spreadC};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(startingLocation);
+
+        List<int[]> neighbors = Fire.neighborTrees(forest, spreadR, spreadC, queue);
+        Set<String> neighborSet = toSet(neighbors);
+
+        assertTrue(neighborSet.contains("0,1"));
+        assertTrue(neighborSet.contains("1,0"));
+
+    }
+
 
 
     private Set<String> toSet(List<int[]> list)
