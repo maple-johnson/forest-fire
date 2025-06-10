@@ -51,6 +51,26 @@ public class FireTest {
 
     }
 
+    // Whole forest burns down
+    @Test
+    public void testTimeToBurn_EverythingGoes()
+    {
+        char[][] forest = {
+            {'t', 't', 't'},
+            {'t', 't', 't'},
+            {'t', 't', 't'}
+        };
+
+        int spreadR = 1;
+        int spreadC = 1;
+
+        int expected = 2;
+        int actual = Fire.timeToBurn(forest, spreadR, spreadC);
+
+        assertEquals(expected, actual);
+
+    }
+
     // Neighbors on All Sides
     @Test
     public void testNeighborTrees_AllSides()
