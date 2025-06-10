@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class Fire {
     /**
      * Returns how long it takes for all vulnerable trees to be set on fire if a
@@ -35,9 +40,77 @@ public class Fire {
      * @param matchC The column the match is lit at
      * @return the time at which the final tree to be incinerated starts burning
      */
-    public static int timeToBurn(char[][] forest, int matchR, int matchC) {
+    public static int timeToBurn(char[][] forest, int matchR, int matchC)
+     {
         // HINT: when adding to your BFS queue, you can include more information than
         // just a location. What other information might be useful?
-        return -1;
+        boolean[][] visited = new boolean[forest.length][forest[0].length];
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{matchR, matchC});
+        int count = -1;
+
+        while (!queue.isEmpty())
+        {
+            int[] current = queue.poll();
+            int curR = current[0];
+            int curC = current[1];
+
+            if (curR == -1)
+            {
+                count++;
+                continue;
+            }
+
+            if (visited[curR][curC]) continue;
+
+            visited[curR][curC] = true;
+
+            queue.addAll(neighborTrees(forest, curR, curC, queue));
+            
+        }
+
+        return count;
     }
+
+    public static List<int[]> neighborTrees(char[][] forest, int spreadR, int spreadC, Queue<int[]> queue)
+    {
+        int[][] directions = {
+            {-1, 0}, // North
+            {1, 0}, // South
+            {0, 1}, // East
+            {0, -1} // West
+        };
+
+        List<int[]> possibleMoves =  new ArrayList<>();
+
+        int check = 0;
+        for (int[] findBurnTurn : queue)
+        {
+            if (findBurnTurn[0] == -1) check++;
+        }
+
+        if (check == 0) possibleMoves.add(new int[]{-1, 0});
+        else check = 0;
+
+        for (int[] direction : directions)
+        {
+            int changeR = direction[0];
+            int changeC = direction[1];
+
+            int newR = spreadR + changeR;
+            int newC = spreadC + changeC;
+
+            if (newR >= 0 &&
+                newR < forest.length &&
+                newC >= 0 && 
+                newC < forest[newR].length &&
+                forest[newR][newC] != '.')
+            {
+                possibleMoves.add(new int[]{newR, newC});
+            }
+        }
+
+        return possibleMoves;
+    }
+
 }
